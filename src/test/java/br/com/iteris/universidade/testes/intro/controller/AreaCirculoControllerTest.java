@@ -1,6 +1,8 @@
 package br.com.iteris.universidade.testes.intro.controller;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,24 +18,24 @@ class AreaCirculoControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    void shouldCalcularAreaCirculoThenReturnAreaValida() throws Exception {
-        final var expectedAreaCirculo = "125.663,7061";
+    @ParameterizedTest
+    @CsvSource(value = {"2;12,5664", "100.64;31.819,3372", "150;70.685,8347"}, delimiter = ';')
+    void shouldCalcularAreaCirculoThenReturnAreaValida(double raio, String expectedArea) throws Exception {
+
         final var expectedContentType = "text/plain;charset=UTF-8";
-        final var expectedContentLength = "12";
+
 
         var mvcResult = mockMvc.perform(
                         post("/area-circulo")
-                                .param("raio", "200")
+                                .param("raio", String.valueOf(raio))
                 )
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", expectedContentType))
-                .andExpect(header().string("Content-Length", expectedContentLength))
                 .andReturn();
 
         var actualResponse = mvcResult.getResponse().getContentAsString();
 
-        assertEquals(expectedAreaCirculo, actualResponse);
+        assertEquals(expectedArea, actualResponse);
     }
 
 }

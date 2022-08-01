@@ -7,6 +7,11 @@ public class AreaCirculo {
     }
 
     public static String calcula(final double raio) {
+        if (raio < 0){
+            throw new IllegalArgumentException("Raio deve ser positivo");
+        } else if (raio == 0) {
+            return "0";
+        }
         final var area = Math.PI * Math.pow(raio, 2);
         return String.format("%,.4f", area);
     }

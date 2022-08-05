@@ -12,6 +12,7 @@ public class PersonFixture {
         return Person.builder()
                 .name("Jon")
                 .email("jon@email.com")
+                .document("12345678912")
                 .build();
     }
 

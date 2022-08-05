@@ -13,7 +13,7 @@ public class PersonValidatorComponent {
     }
 
     private void validateEmail(String email) {
-        if (EmailUtils.isValid(email)){
+        if (!EmailUtils.isValid(email)){
             throw new IllegalArgumentException("Person email is invalid!");
         }
     }
